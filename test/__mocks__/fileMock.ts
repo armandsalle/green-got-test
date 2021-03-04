@@ -4,7 +4,7 @@ export const capitalizeTests = [
   { params: 'aR', result: 'Ar' },
   { params: 3 as any, result: '' },
   { params: 'plop', result: 'Plop' },
-  { params: 'pLoP', result: 'plop' },
+  { params: 'pLoP', result: 'Plop' },
 ]
 
 export const greetingsTests = [
