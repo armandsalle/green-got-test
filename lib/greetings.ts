@@ -3,15 +3,27 @@ interface greetingsOptions {
   error: string | boolean
 }
 
+export const hasNumber = (myString: string): boolean => {
+  return /\d/.test(myString)
+}
+
 export const capitalize = (s: string): string => {
   if (typeof s !== 'string') return ''
   return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase()
 }
 
+export const createCapitalizedNames = (s: string): string => {
+  return s
+    .trim()
+    .split(' ')
+    .map((name) => capitalize(name))
+    .join(' ')
+}
+
 export const greetings = (firstName: string): greetingsOptions => {
-  if (typeof firstName !== 'string')
+  if (typeof firstName !== 'string' || hasNumber(firstName))
     return {
-      message: 'Please provide a string as paramater for greetings(firstName)',
+      message: 'Please provide a string, without numbers',
       error: true,
     }
 
@@ -21,10 +33,10 @@ export const greetings = (firstName: string): greetingsOptions => {
       error: false,
     }
 
-  const computedFirstName = capitalize(firstName.trim())
+  const computedName = createCapitalizedNames(firstName)
 
   return {
-    message: `Hello ${computedFirstName}`,
+    message: `Hello ${computedName}`,
     error: false,
   }
 }
