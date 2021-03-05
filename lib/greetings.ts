@@ -1,10 +1,8 @@
+import { isTextWellFormated } from '@/utils/isTextWellFormated'
+
 export interface greetingsOptions {
   message: string
   error: string | boolean
-}
-
-export const isTextWellFormated = (myString: string): boolean => {
-  return /^[A-zÀ-ú- ]*$/.test(myString)
 }
 
 export const capitalize = (s: string): string => {
@@ -22,7 +20,7 @@ export const capitalize = (s: string): string => {
 export const greetings = (firstName: string): greetingsOptions => {
   if (typeof firstName !== 'string' || !isTextWellFormated(firstName))
     return {
-      message: 'Please provide a string',
+      message: 'Please provide a valid string',
       error: true,
     }
 

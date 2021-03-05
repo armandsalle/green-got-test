@@ -1,23 +1,38 @@
 import Head from 'next/head'
 import { ChangeEvent, useState } from 'react'
-import { greetingsOptions } from '../lib/greetings'
+import { greetingsOptions } from '@/lib/greetings'
 
 export const Home = (): JSX.Element => {
   const [firstName, setFirstName] = useState<string>('')
   const [greetings, setGreetings] = useState<greetingsOptions | null>(null)
+  const [errors, setErrors] = useState<{ hasError: boolean; message: string }>({
+    hasError: false,
+    message: '',
+  })
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setErrors({
+      hasError: false,
+      message: '',
+    })
     setFirstName(e.target.value)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const queryParams = encodeURI(firstName)
-    const res = await fetch(`/api/greetings/${queryParams}`)
-    const data = await res.json()
+    try {
+      const queryParams = encodeURI(firstName)
+      const res = await fetch(`/api/greetings/${queryParams}`)
+      const data = await res.json()
 
-    setGreetings(data)
+      setGreetings(data)
+    } catch (error) {
+      setErrors({
+        hasError: true,
+        message: 'Invalid string',
+      })
+    }
   }
 
   return (
@@ -37,7 +52,8 @@ export const Home = (): JSX.Element => {
         />
         <input type="submit" value="Sumit" disabled={!firstName} />
       </form>
-      {greetings && (
+      {errors.hasError && <p>{errors.message}</p>}
+      {!errors.hasError && greetings && (
         <p style={{ color: greetings.error ? 'red' : 'blue' }}>
           result: {greetings.message}
         </p>

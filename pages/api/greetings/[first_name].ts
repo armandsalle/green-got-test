@@ -1,20 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { greetings } from '../../../lib/greetings'
+import { greetings } from '@/lib/greetings'
+import { cehckObjectProperty } from '@/utils/checkObjectProperty'
 
 const handleGet = (req: NextApiRequest, res: NextApiResponse): void => {
   const { query } = req
 
-  const firstNameExist: boolean = Object.prototype.hasOwnProperty.call(
-    query,
-    'first_name'
-  )
+  const isFirstNameExist: boolean = cehckObjectProperty(query, 'first_name')
 
-  if (firstNameExist) {
+  if (isFirstNameExist) {
     const firstName = query['first_name']
     const result = greetings(firstName.toString())
+
     res.status(200).json(result)
   } else {
-    res.status(400).end('Bad request, missing first_name parameter')
+    res.status(400).end('Bad request, missing parameter')
   }
 }
 

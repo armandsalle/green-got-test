@@ -33,21 +33,21 @@ export const greetingsTests = [
   {
     params: 3 as any,
     result: {
-      message: 'Please provide a string',
+      message: 'Please provide a valid string',
       error: true,
     },
   },
   {
     params: 'hello3',
     result: {
-      message: 'Please provide a string',
+      message: 'Please provide a valid string',
       error: true,
     },
   },
   {
     params: '42',
     result: {
-      message: 'Please provide a string',
+      message: 'Please provide a valid string',
       error: true,
     },
   },
