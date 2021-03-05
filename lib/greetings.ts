@@ -1,29 +1,28 @@
-interface greetingsOptions {
+export interface greetingsOptions {
   message: string
   error: string | boolean
 }
 
-export const hasNumber = (myString: string): boolean => {
-  return /\d/.test(myString)
+export const isTextWellFormated = (myString: string): boolean => {
+  return /^[A-zÀ-ú- ]*$/.test(myString)
 }
 
 export const capitalize = (s: string): string => {
+  // Example of the regex here: https://regexr.com/5nthl
   if (typeof s !== 'string') return ''
-  return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase()
-}
 
-export const createCapitalizedNames = (s: string): string => {
   return s
     .trim()
-    .split(' ')
-    .map((name) => capitalize(name))
-    .join(' ')
+    .toLowerCase()
+    .replace(/(^[A-zÀ-ú]{1})|([-\s]{1}[A-zÀ-ú]{1})/g, (match) =>
+      match.toUpperCase()
+    )
 }
 
 export const greetings = (firstName: string): greetingsOptions => {
-  if (typeof firstName !== 'string' || hasNumber(firstName))
+  if (typeof firstName !== 'string' || !isTextWellFormated(firstName))
     return {
-      message: 'Please provide a string, without numbers',
+      message: 'Please provide a string',
       error: true,
     }
 
@@ -33,7 +32,7 @@ export const greetings = (firstName: string): greetingsOptions => {
       error: false,
     }
 
-  const computedName = createCapitalizedNames(firstName)
+  const computedName = capitalize(firstName)
 
   return {
     message: `Hello ${computedName}`,
