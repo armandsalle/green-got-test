@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { greetings } from '../../lib/greetings'
+import { greetings } from '../../../lib/greetings'
 
 const handleGet = (req: NextApiRequest, res: NextApiResponse): void => {
   const { query } = req

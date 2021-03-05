@@ -3,15 +3,20 @@ import { ChangeEvent, useState } from 'react'
 import { greetingsOptions } from '../lib/greetings'
 
 export const Home = (): JSX.Element => {
-  const [firstName, setFirstName] = useState('')
+  const [firstName, setFirstName] = useState<string>('')
   const [greetings, setGreetings] = useState<greetingsOptions | null>(null)
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFirstName(e.target.value)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const queryParams = { first_name: firstName }
-    const a = new URLSearchParams(queryParams).toString()
-    const res = await fetch('/api/greetings?' + a)
+
+    const queryParams = encodeURI(firstName)
+    const res = await fetch(`/api/greetings/${queryParams}`)
     const data = await res.json()
+
     setGreetings(data)
   }
 
@@ -28,9 +33,7 @@ export const Home = (): JSX.Element => {
           name="fistname"
           id="firstname"
           value={firstName}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setFirstName(e.target.value)
-          }
+          onChange={handleInputChange}
         />
         <input type="submit" value="Sumit" disabled={!firstName} />
       </form>
