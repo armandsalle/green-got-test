@@ -1,5 +1,5 @@
 import { capitalizeTests, greetingsTests } from '../__mocks__/fileMock'
-import handler from '../../pages/api/greetings/[first_name]'
+import handler from '../../pages/api/greetings/[firstName]'
 import { createMocks } from 'node-mocks-http'
 import { greetings, capitalize } from '../../lib/greetings'
 
@@ -22,7 +22,7 @@ describe('/api/greetings/[first_name]', () => {
     const { req, res } = createMocks({
       method: 'GET',
       query: {
-        first_name: 'armand',
+        firstName: 'armand',
       },
     })
 
@@ -56,7 +56,7 @@ describe('/api/greetings/[first_name]', () => {
     const { req, res } = createMocks({
       method: 'GET',
       query: {
-        first_name: '3',
+        firstName: '3',
       },
     })
 

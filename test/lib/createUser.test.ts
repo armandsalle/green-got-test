@@ -1,5 +1,5 @@
 import { createUser } from '../../lib/createUser'
-import handler from '../../pages/api/create_user/'
+import handler from '../../pages/api/create-user/'
 import { createMocks } from 'node-mocks-http'
 
 const errorObject = {
@@ -37,7 +37,7 @@ describe('Greeetings', () => {
   })
 })
 
-describe('/api/create_user', () => {
+describe('/api/create-user', () => {
   it('should post and return a new user', async () => {
     const { req, res } = createMocks({
       method: 'POST',

@@ -7,10 +7,10 @@ const handleGet = (req: NextApiRequest, res: NextApiResponse): void => {
 
   res.setHeader('Content-Type', 'application/json')
 
-  const isFirstNameExist: boolean = cehckObjectProperty(query, 'first_name')
+  const isFirstNameExist: boolean = cehckObjectProperty(query, 'firstName')
 
   if (isFirstNameExist) {
-    const firstName = query['first_name']
+    const firstName = query['firstName']
     const { message, error } = greetings(firstName.toString())
 
     if (!error) {
