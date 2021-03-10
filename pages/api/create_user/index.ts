@@ -2,8 +2,16 @@ import { createUser } from '@/lib/createUser'
 import { cehckObjectProperty } from '@/utils/checkObjectProperty'
 import { NextApiRequest, NextApiResponse } from 'next'
 
+const sendParamError = (res, message) =>
+  res.status(422).json({
+    status: 422,
+    message,
+  })
+
 const handlePost = (req: NextApiRequest, res: NextApiResponse): void => {
   const { body } = req
+
+  res.setHeader('Content-Type', 'application/json')
 
   const isFirstNameExist: boolean = cehckObjectProperty(body, 'firstName')
   const isLastNameExist: boolean = cehckObjectProperty(body, 'lastName')
@@ -14,13 +22,27 @@ const handlePost = (req: NextApiRequest, res: NextApiResponse): void => {
 
     const result = createUser(firstName.toString(), lastName.toString())
 
-    res.status(200).json(result)
+    if (!result.error) {
+      res.status(200).json({
+        payload: {
+          firstName: result.firstName,
+          lastName: result.lastName,
+        },
+      })
+    } else {
+      res.status(422).json({
+        status: 422,
+        message: result.message,
+      })
+    }
+  } else if (!isFirstNameExist && !isLastNameExist) {
+    sendParamError(res, 'Bad request, missing first and last name parameters.')
+  } else if (!isFirstNameExist) {
+    sendParamError(res, 'Bad request, missing first name parameters.')
+  } else if (!isLastNameExist) {
+    sendParamError(res, 'Bad request, missing last name parameters.')
   } else {
-    res
-      .status(400)
-      .end(
-        'Bad request, missing parameters. This route needs a JSON object with a first and a last name as strings.'
-      )
+    sendParamError(res, 'Bad request, missing first and last name parameters.')
   }
 }
 
@@ -33,7 +55,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
       break
     default:
       res.setHeader('Allow', ['POST'])
-      res.status(405).end(`Method ${method} Not Allowed`)
+      res.status(405).json({
+        status: 405,
+        message: `Method ${method} Not Allowed`,
+      })
   }
 }
 

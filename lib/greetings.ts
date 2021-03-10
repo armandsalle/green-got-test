@@ -2,7 +2,7 @@ import { isTextWellFormated } from '@/utils/isTextWellFormated'
 
 export interface greetingsOptions {
   message: string
-  error: string | boolean
+  error: boolean
 }
 
 export const capitalize = (s: string): string => {

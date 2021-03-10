@@ -5,15 +5,27 @@ import { cehckObjectProperty } from '@/utils/checkObjectProperty'
 const handleGet = (req: NextApiRequest, res: NextApiResponse): void => {
   const { query } = req
 
+  res.setHeader('Content-Type', 'application/json')
+
   const isFirstNameExist: boolean = cehckObjectProperty(query, 'first_name')
 
   if (isFirstNameExist) {
     const firstName = query['first_name']
-    const result = greetings(firstName.toString())
+    const { message, error } = greetings(firstName.toString())
 
-    res.status(200).json(result)
+    if (!error) {
+      res.status(200).json({ payload: message })
+    } else {
+      res.status(422).json({
+        status: 422,
+        message,
+      })
+    }
   } else {
-    res.status(400).end('Bad request, missing parameter')
+    res.status(422).json({
+      status: 422,
+      message: 'Bad request, missing a valid first name parameter',
+    })
   }
 }
 
@@ -26,7 +38,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
       break
     default:
       res.setHeader('Allow', ['GET'])
-      res.status(405).end(`Method ${method} Not Allowed`)
+      res.status(405).json({
+        status: 405,
+        message: `Method ${method} Not Allowed`,
+      })
   }
 }
 

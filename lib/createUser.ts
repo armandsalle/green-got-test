@@ -4,7 +4,7 @@ export interface createUserOptions {
   firstName: string
   lastName: string
   message: string
-  error: string | boolean
+  error: boolean
 }
 
 export const createUser = (
