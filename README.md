@@ -28,5 +28,7 @@ Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&ut
 
 ## API endpoints
 
-- /api/greetings/[firstName]
-- /api/create-user : need a JSON body with firstName and lastName properties
+- GET /api/greetings/[firstName]
+  - Need a first name string as uid. It return a message `Hello FirstName`
+- POST /api/create-user
+  - Need a JSON body with a firstName and a lastNae properties. It return a JSON payload with the first name and the last name, fully uppercase
