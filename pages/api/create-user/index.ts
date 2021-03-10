@@ -1,5 +1,5 @@
 import { createUser } from '@/lib/createUser'
-import { cehckObjectProperty } from '@/utils/checkObjectProperty'
+import { checkObjectProperty } from '@/utils/checkObjectProperty'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const sendParamError = (res, message) =>
@@ -13,8 +13,8 @@ const handlePost = (req: NextApiRequest, res: NextApiResponse): void => {
 
   res.setHeader('Content-Type', 'application/json')
 
-  const isFirstNameExist: boolean = cehckObjectProperty(body, 'firstName')
-  const isLastNameExist: boolean = cehckObjectProperty(body, 'lastName')
+  const isFirstNameExist: boolean = checkObjectProperty(body, 'firstName')
+  const isLastNameExist: boolean = checkObjectProperty(body, 'lastName')
 
   if (isFirstNameExist && isLastNameExist) {
     const firstName = body['firstName']

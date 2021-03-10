@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { greetings } from '@/lib/greetings'
-import { cehckObjectProperty } from '@/utils/checkObjectProperty'
+import { checkObjectProperty } from '@/utils/checkObjectProperty'
 
 const handleGet = (req: NextApiRequest, res: NextApiResponse): void => {
   const { query } = req
 
   res.setHeader('Content-Type', 'application/json')
 
-  const isFirstNameExist: boolean = cehckObjectProperty(query, 'firstName')
+  const isFirstNameExist: boolean = checkObjectProperty(query, 'firstName')
 
   if (isFirstNameExist) {
     const firstName = query['firstName']

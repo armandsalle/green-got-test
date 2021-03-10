@@ -1,4 +1,4 @@
-export const cehckObjectProperty = (
+export const checkObjectProperty = (
   obj: Record<string, unknown>,
   key: string
 ): boolean => {
